@@ -50,7 +50,8 @@ $link3->click();
 echo "The title is " . $driver->getTitle() . "'\n";
 // print the title of the current page
 echo "The current URI is " . $driver->getCurrentURL() . "'\n";
-
+$full_screenshot = TakeScreenshot(null, $driver);
+var_dump($full_screenshot);
 // $input->sendKeys('php')->submit();
 
 // wait at most 10 seconds until at least one result is shown
@@ -62,3 +63,44 @@ $driver->wait(10)->until(
 
 // close the Firefox
 $driver->quit();
+
+function TakeScreenshot($element=null, $driver){
+
+        // Change the Path to your own settings
+        $screenshot = '/Users/egapool/Develop/public/php-webdriver/img/' . time() . ".png";
+
+        // Change the driver instance
+        $driver->takeScreenshot($screenshot);
+        if(!file_exists($screenshot)){
+            throw new Exception('Could not save screenshot');
+        }
+
+        if(!(bool)$element){
+            return $screenshot;
+        }
+
+        $element_screenshot = '/Users/egapool/Develop/public/php-webdriver/img/' . time() . ".png"; // Change the path here as well
+
+        $element_width = $element->getSize()->getWidth();
+        $element_height = $element->getSize()->getHeight();
+
+        $element_src_x = $element->getLocation()->getX();
+        $element_src_y = $element->getLocation()->getY();
+
+        // Create image instances
+        $src = imagecreatefrompng($screenshot);
+        $dest = imagecreatetruecolor($element_width, $element_height);
+
+        // Copy
+        imagecopy($dest, $src, 0, 0, $element_src_x, $element_src_y, $element_width, $element_height);
+
+        imagepng($dest, $element_screenshot);
+
+        // unlink($screenshot); // unlink function might be restricted in mac os x.
+
+        if(!file_exists($element_screenshot)){
+            throw new Exception('Could not save element screenshot');
+        }
+
+        return $element_screenshot;
+    }
