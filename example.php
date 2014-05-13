@@ -31,6 +31,7 @@ $link->click();
 echo "The title is " . $driver->getTitle() . "'\n";
 // print the title of the current page
 echo "The current URI is " . $driver->getCurrentURL() . "'\n";
+echo "ソース " . $driver->getPageSource() . "'\n";
 
 // Search 'php' in the search box
 $link2 = $driver->findElement(
@@ -50,6 +51,8 @@ $link3->click();
 echo "The title is " . $driver->getTitle() . "'\n";
 // print the title of the current page
 echo "The current URI is " . $driver->getCurrentURL() . "'\n";
+
+
 $full_screenshot = TakeScreenshot(null, $driver);
 var_dump($full_screenshot);
 // $input->sendKeys('php')->submit();
