@@ -9,7 +9,7 @@ $capabilities = array(WebDriverCapabilityType::BROWSER_NAME => 'firefox');
 $driver = RemoteWebDriver::create($host, $capabilities, 5000);
 
 // navigate to 'http://docs.seleniumhq.org/'
-$driver->get('http://docs.seleniumhq.org/');
+$driver->get('http://fuzoku.jp/');
 
 // adding cookie
 $driver->manage()->deleteAllCookies();
@@ -22,21 +22,36 @@ print_r($cookies);
 
 // click the link 'About'
 $link = $driver->findElement(
-  WebDriverBy::id('menu_about')
+  // WebDriverBy::id('menu_about')
+  WebDriverBy::xpath('html/body/table[2]/tbody/tr/td[2]/table[2]/tbody/tr/td[2]/h2/a')
 );
 $link->click();
 
 // print the title of the current page
 echo "The title is " . $driver->getTitle() . "'\n";
-
 // print the title of the current page
 echo "The current URI is " . $driver->getCurrentURL() . "'\n";
 
 // Search 'php' in the search box
-$input = $driver->findElement(
-  WebDriverBy::id('q')
+$link2 = $driver->findElement(
+  WebDriverBy::xpath('html/body/table[2]/tbody/tr/td[2]/table[3]/tbody/tr/td[1]/table[1]/tbody/tr[3]/td/table[2]/tbody/tr[1]/td/h3/a')
 );
-$input->sendKeys('php')->submit();
+$link2->click();
+// print the title of the current page
+echo "The title is " . $driver->getTitle() . "'\n";
+// print the title of the current page
+echo "The current URI is " . $driver->getCurrentURL() . "'\n";
+
+$link3 = $driver->findElement(
+  WebDriverBy::xpath(".//*[@id='area1']/tbody/tr[1]/td[2]/h4/a")
+);
+$link3->click();
+// print the title of the current page
+echo "The title is " . $driver->getTitle() . "'\n";
+// print the title of the current page
+echo "The current URI is " . $driver->getCurrentURL() . "'\n";
+
+// $input->sendKeys('php')->submit();
 
 // wait at most 10 seconds until at least one result is shown
 $driver->wait(10)->until(
